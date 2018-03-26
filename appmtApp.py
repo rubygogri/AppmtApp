@@ -17,7 +17,7 @@ app.secret_key = 'Pvt key'
 
 @app.route('/')
 def hello():
-	return "Hello User!\n Your Appointment Details are on the "appt.html" page"
+	return "Hello User!\n Your Appointment Details are on the 'appt.html' page"
 
 # This seach form lets you search for a String in SEARCH BAR and then return results according to the data entered
 # --If NO data is entered i.e. the string is EMPTY then ALL the results from the table are returned on the page
