@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Appointment Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/main.css" type="text/css" media="all">
+    <link rel="stylesheet" href="/static/bootstrap.min.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">AppointmentMadeEasy.com</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Details
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Signout</a></li>
+            </ul>
+        </ul>
+      </div>
+    </nav>
+
+  </head>
+  <body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src=/static/bootstrap.min.js></script>
+
+    <div class="container">
+      <h2>Appointment Details</h2>
+        <input type="submit" id="formButton" class="btn btn-info" value="New"> <br>
+        <form id="form1">
+          <input type="submit" id="formButton1" class="btn btn-info" value="Add" style="color:white;background-color:orange;">
+          <input type="submit" id="formButton2" class="btn btn-info" value="Cancel" style="color:white;background-color:orange;"> <br> <br>
+          <b>Date: </b> <input type="date" id="date" name="date" value='Description'> <br> <br>
+          <b>Time: </b> <input type="time" id="time" name="time"> <br> <br>
+          <b>Desc: </b> <input type="text" id="description" name="Description"> <br> <br>
+        </form>
+
+        <div class="container">
+          <script>
+              $("#formButton").click(function(){
+              $("#formButton").hide();
+              $("#form1").show();
+              });
+
+          </script>
+        </div>
+
+        <style>
+          #form1 {
+            display:none;
+          }
+          </style>
+    </div>
+
+    <form action = "http://localhost:5000/appt/" method = post>
+       <fieldset>
+          <legend> </legend>
+          {{form.hidden_tag()}}
+          
+          <div class="container">
+             {{ form.searchAppt.label }}
+             {{ form.searchAppt }} <br>
+             {{ form.submit }}
+          </div>
+          
+       </fieldset>
+    </form>
+
+    <div class="container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Date       </th>
+            <th scope="col">Time       </th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+              <td>{{ user[0] }}</td>
+              <td>{{ user[1] }}</td>
+              <td>{{ user[2] }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      <legend> </legend>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function getAppointments() {
+          var json;
+          $.ajax({
+            'type': 'GET',
+            'url': 'hello.py',
+            'async': true,
+            'success': function (data) {
+              console.log('Hello')
+              var json = JSON.parse(data);
+              for (var i = 0; i < json.data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + json.data[i].date + "</td>");
+                tr.append("<td>" + json.data[i].time + "</td>");
+                tr.append("<td>" + json.data[i].description + "</td>");
+                $('table').append(tr);
+              }
+            }
+          });
+          $("#Cancel").click(function () {
+            $("#formm").hide();
+            $("#form2").show();
+          });
+    </script>
+
+    <div class="container">
+      <ul class="pagination">
+        <li><a href="#">1</a></li>
+        <li><a href="#">2</a></li>
+      </ul>
+    </div>
+  </body>
+</html>
